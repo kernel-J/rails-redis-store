@@ -1,13 +1,11 @@
 class User < Ohm::Model
-  attribute :name
+  attribute :username
   attribute :password
   attribute :confirmation_at
-
-  ## TO DO: add validation to name
-  # def validate
-  #   assert_present :name
-  #   assert_format :name, /^[a-z]+$/
-  # end
+  
+  unique :username
+  
+  index :username
 
   def persisted?
     true
