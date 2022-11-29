@@ -19,10 +19,10 @@ class User::Create < Transactions::MonadBase
       if user.save
         Success(user)
       else
-        Failure(error: ['failed to save user'])
+        Failure(errors: ['failed to save user'])
       end
     rescue => error
-      Failure(error: ['username already exists'])
+      Failure(errors: ['username already exists'])
     end
   end
 
@@ -38,10 +38,10 @@ class User::Create < Transactions::MonadBase
       if api_key.save
         Success(api_key)
       else
-        Failure(error: ["failed to create api_key for user_id: #{user.id}"])
+        Failure(errors: ["failed to create api_key for user_id: #{user.id}"])
       end
     rescue => error
-      Failure(error: ['token already exsits'])
+      Failure(errors: ['token already exsits'])
     end
   end
 end
