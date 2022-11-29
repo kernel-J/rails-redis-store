@@ -9,7 +9,6 @@ module Api
 
       def index
         result = Authentications::Login.call(params: login_params)
-        puts "---------> result = #{result.inspect}"
 
         if result.success?
           render json: {:message => "success"}, status: :ok
