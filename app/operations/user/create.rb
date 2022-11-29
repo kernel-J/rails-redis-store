@@ -1,5 +1,7 @@
 class User::Create < Transactions::MonadBase
   def call(params:)
+    yield validate_user_name(params[:username])
+
     yield Authentications::Validator.call(password: params[:password])
 
     hashed = BCrypt::Password.create(params[:password] + ENV['PEPPER'])
@@ -12,9 +14,17 @@ class User::Create < Transactions::MonadBase
 
   end
 
+  def validate_username(username)
+    if username.length >= 3 && username <= 25
+      Success()
+    else
+      Failure(errors: ['username should be between 3 - 25 characters'])
+    end
+  end
+
   def create_user(params, hashed)
     begin
-      user = User.create(:username => params[:username].downcase, :password => hashed)
+      user = User.create(:username => params[:username], :password => hashed)
 
       if user.save
         Success(user)
