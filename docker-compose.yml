@@ -16,6 +16,9 @@ services:
       - redis
     environment:
       - REDIS_URL=redis://redis:6379
+      - RAILS_ENV=production
+    env_file:
+      - .env
 
 volumes:
   redis_data:
