@@ -7,6 +7,12 @@ class User < Ohm::Model
   
   index :username
 
+  collection :api_keys, :ApiKey
+
+  def to_hash
+    super.merge(:username => username, :password => password, :confirmation_at => confirmation_at)
+  end
+
   def persisted?
     true
   end
