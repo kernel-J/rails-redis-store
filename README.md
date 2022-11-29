@@ -1,24 +1,77 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Authenication service that serves to create users and authenticate users.
 
-Things you may want to cover:
+## Routes
 
-* Ruby version
+ROUTE | METHOD | FUNCTION
+--- | --- | ---
+/api/v1/user | POST | Create a user
+/api/v1/login | POST | Authenicating a user
 
-* System dependencies
+## Usage
 
-* Configuration
+To create a user
+```
+curl -d '{"username":"user", "password":"Strongp@ssword1"}' -H "Content-Type: application/json" -X POST http://localhost:3000/api/v1/user
 
-* Database creation
+Example response:
+{
+  "id": "1",
+  "bearer_id": "1",
+  "bearer_type": "User",
+  "token": "49742bb06a1ca28ed3e2607621fcaeab",
+  "timestamp": "2022-11-29T08:58:37.148+00:00"
+}
 
-* Database initialization
+```
+To authenicate a user
+```
+curl -d '{"username": "user", "password": "Strongp@ssword1"}' -H 'Authorization: Bearer 49742bb06a1ca28ed3e2607621fcaeab' -H "Content-Type: application/json" -X POST http://localhost:3000/api/v1/login
 
-* How to run the test suite
+Example response:
+{
+  "message": "success"
+}
+```
 
-* Services (job queues, cache servers, search engines, etc.)
+## Data Storage
 
-* Deployment instructions
+Passwords are stored in a hashed form. The gem [**bcrypt-ruby**](https://github.com/bcrypt-ruby/bcrypt-ruby) is used for the hashing algorithms and salting. To add an extra layer of security, the password is also peppered. The pepper string can be modified in the **.env** file.
 
-* ...
+To ensure secure passwords, validation requirements include:
+* containing at least 1 uppercase letter
+* containing at least 1 lowercase letter
+* containing at least 1 special character
+* containing at least 1 numeric
+* having the length between 12 and 255 characters
+
+Usernames also have a validation:
+* must be between 3 and 25 characters
+
+## Mapping
+Since the main storage of data is Redis, the models are mapped using [**ohm**](https://github.com/soveran/ohm).
+
+## Developement
+
+To start the development server
+
+```
+docker-compose -f docker-compose.dev.yml up
+```
+
+To stop the server
+```
+docker-compose -f docker-compose.dev.yml down
+```
+
+## Production
+
+## Testing
+Test are written using rspec
+```
+bundle exec rspec
+```
+
+## Futher Improvements
+
