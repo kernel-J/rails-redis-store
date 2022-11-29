@@ -4,10 +4,10 @@ Authenication service that serves to create users and authenticate users.
 
 ## Routes
 
-ROUTE | METHOD | FUNCTION
---- | --- | ---
-/api/v1/user | POST | Create a user
-/api/v1/login | POST | Authenicating a user
+ROUTE | METHOD | FUNCTION | PARAMETERS | REQUIRES TOKEN
+--- | --- | --- | --- | ---
+/api/v1/user | POST | Create a user | { user : { username: '', password: '' } } | No
+/api/v1/login | POST | Authenicating a user | { login: { username: '', password: '' } } | Yes
 
 ## Usage
 
