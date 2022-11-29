@@ -38,10 +38,13 @@ describe 'User', type: :request do
         allow(User::Create).to receive(:call).and_return(result)
 
         post '/api/v1/user', params:
-                                { user: {
-                                  username: '',
-                                  password: ''
-                                } }
+                                {
+                                  format: :json,
+                                  user: {
+                                    username: '',
+                                    password: ''
+                                  }
+                                }
       end
 
       it 'returns a bad_request' do

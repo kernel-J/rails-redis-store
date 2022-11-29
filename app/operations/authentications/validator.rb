@@ -1,5 +1,6 @@
 class Authentications::Validator < Transactions::MonadBase
-  LENGTH = 12
+  MIN_LENGTH = 12
+  MAX_LENGTH = 255
 
   def call(password:)
     yield valid_length?(password)
@@ -11,8 +12,10 @@ class Authentications::Validator < Transactions::MonadBase
   private
 
   def valid_length?(password)
-    if password.length < LENGTH
+    if password.length < MIN_LENGTH
       Failure(errors: ["must be at least 12 characters long"])
+    elsif password.length > MAX_LENGTH
+      Failure(errors: ["must be less than 255 characters long"])
     else
       Success()
     end

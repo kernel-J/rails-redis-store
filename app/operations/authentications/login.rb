@@ -1,7 +1,7 @@
 class Authentications::Login < Transactions::MonadBase
 
   def call(params:)    
-    user = User.find(username: params[:username].downcase)
+    user = User.find(username: params[:username])
 
     if user.count == 0
       return Failure(errors: ['either name or password is incorrect'])
