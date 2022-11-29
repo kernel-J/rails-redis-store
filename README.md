@@ -67,11 +67,27 @@ docker-compose -f docker-compose.dev.yml down
 
 ## Production
 
+To build the image for production
+```
+docker-compose build
+```
+To run
+```
+docker-compose up
+```
+
 ## Testing
 Test are written using rspec
 ```
 bundle exec rspec
 ```
 
-## Futher Improvements
+## Further Improvements
+##### System
+- [ ] Make a test deployment to remote server
+- [ ] Change Http to Https
+- [ ] Add load testing
 
+##### Development
+- [ ] Add [rubocop](https://github.com/rubocop/rubocop)
+- [ ] Setup a CI/CD pipeline
