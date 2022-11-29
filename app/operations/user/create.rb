@@ -1,6 +1,6 @@
 class User::Create < Transactions::MonadBase
   def call(params:)
-    yield validate_user_name(params[:username])
+    yield validate_username(params[:username])
 
     yield Authentications::Validator.call(password: params[:password])
 
@@ -15,7 +15,7 @@ class User::Create < Transactions::MonadBase
   end
 
   def validate_username(username)
-    if username.length >= 3 && username <= 25
+    if username.length >= 3 && username.length <= 25
       Success()
     else
       Failure(errors: ['username should be between 3 - 25 characters'])
